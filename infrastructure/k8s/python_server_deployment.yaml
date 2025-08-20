@@ -17,7 +17,7 @@ spec:
       containers:
         - name: python-container
           image: >-
-            yosigu/fastapi-mongo:latest
+            yosigu/fastapi-mongo:1
           ports:
             - containerPort: 8005
               protocol: TCP
@@ -28,6 +28,8 @@ spec:
               value: root_password 
             - name: MONGO_USER
               value: root_username
+            - name: MONGO_COLLECTION
+              value: soldier_details
       imagePullSecrets: []
   strategy:
     type: RollingUpdate
