@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: yosefgu-dev
+  name: python-server-2
+  annotations: {}
+spec:
+  selector:
+    matchLabels:
+      app: python-server-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: python-server-2
+    spec:
+      containers:
+        - name: python-container
+          image: >-
+            yosigu/fastapi-mongo:latest
+          ports:
+            - containerPort: 8005
+              protocol: TCP
+          env: 
+            - name: MONGO_HOST
+              value: mongodb-svc-2 
+            - name: MONGO_PASSWORD
+              value: root_password 
+            - name: MONGO_USER
+              value: root_username
+      imagePullSecrets: []
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  paused: false
