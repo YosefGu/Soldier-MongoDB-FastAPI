@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: yosefgu-dev
+  name: mongodb-server-2
+  annotations: {}
+spec:
+  selector:
+    matchLabels:
+      app: mongodb-server-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongodb-server-2
+    spec:
+      containers:
+        - name: mongodb-container
+          image: >-
+            docker.io/library/mongo@sha256:7bd210c8952f4632f2400dfc6131a237d37bdf3d19da5bd7c3bc87dfea046e52
+          ports:
+            - containerPort: 27017
+              protocol: TCP
+          env: 
+            - name: MONGO_INITDB_DATABASE
+              value: enemy_soldiers
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: root_password 
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root_username
+          
+          volumeMounts:
+            - name: mongodb-storage-2
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-storage-2
+          persistentVolumeClaim:
+            claimName: mongodb-pvc-2
+
+      imagePullSecrets: []
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  paused: false

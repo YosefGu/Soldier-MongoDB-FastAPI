@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-svc-2
+  namespace: yosefgu-dev   
+spec:
+  selector:
+    app: python-server-2  
+  ports:
+    - protocol: TCP
+      port: 8005          
+      targetPort: 8005    
+  type: ClusterIP         
