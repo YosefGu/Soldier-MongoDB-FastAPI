@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Body
-import uvicorn
 from controller import Controller
 
 app = FastAPI()
@@ -21,9 +20,3 @@ async def delete_soldier(id: int):
     return Controller.delete_soldier(id)
 
 
-if __name__ == "__main__":
-    try:
-        uvicorn.run(app, port=8000)
-    except Exception as e:
-        print("Error running server")
-        print(e)
